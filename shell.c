@@ -51,6 +51,25 @@ while (1) {
     if (strcmp(komut, "cikis") == 0) {
         reboot(RB_POWER_OFF);
     };
+    if (strcmp(komut, "cat") == 0) {
+        char girdi1[256];
+        if (arguman == NULL) {
+            continue;
+        }
+        FILE* ofile = fopen(arguman, "r");
+        if (ofile == NULL) {
+            printf("Acmaya calistigin dosya bombos? Kalbin gibi :)");
+            continue;
+        }
 
+        while (fgets(girdi1, 256, ofile) != NULL) {
+            printf("%s", girdi1);
+        }
+        fclose(ofile);
+        printf("\n");
+    };
+    if (strcmp(komut, "yardim") == 0) {
+        printf("\nKomutlar;\npati = Supriz komutu\nuname = Sistem bilgisi\ncat = dosya okur\ntemizle = ekrani temizler\nls = klasorleri listeler\n");
+    };
     }
-}
+    }
