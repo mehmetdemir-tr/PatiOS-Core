@@ -78,8 +78,4 @@ free(namelist[i]);
 }
 free(namelist);
 while(wait(NULL) > 0);
-// Invoking the programs
-// Example: hello.ppg
-// system("")
-//.. böyle devam ediyor
 }
