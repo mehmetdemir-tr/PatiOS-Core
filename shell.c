@@ -36,42 +36,17 @@ int main(void) {
             printf("Miyavv!\n");
         }
         else if (strcmp(argv[0], "miyav") == 0) {
-            if (argv[1] == NULL) {
-                printf("Kullanim: miyav <adres>\n");
-                continue;
-            }
-
-            struct addrinfo *sonuc;
-            int ret = getaddrinfo(argv[1], NULL, NULL, &sonuc);
-            if (ret != 0) {
-                printf("miyav: adres cozumlenemedi: %s\n", argv[1]);
-                continue;
-            }
-
-            int soket = socket(AF_INET, SOCK_STREAM, 0);
-            if (soket < 0) {
-                printf("miyav: soket acilamadi\n");
-                freeaddrinfo(sonuc);
-                continue;
-            }
-            struct timeval timeout;
-            timeout.tv_sec = 2;
-            timeout.tv_usec = 0;
-            setsockopt(soket, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout));
-
-            struct sockaddr_in hedef;
-            hedef.sin_family = AF_INET;
-            hedef.sin_port = htons(53);
-            hedef.sin_addr = ((struct sockaddr_in *)sonuc->ai_addr)->sin_addr;
-
-            if (connect(soket, (struct sockaddr *)&hedef, sizeof(hedef)) == 0) {
-                printf("miyav: %s ulasilabilir, kedy mutlu! :)\n", argv[1]);
+            pid_t pid = fork();
+            if (pid == 0) {
+                char *args[] = {"/lib/paticommands/miyav", argv[1], NULL};
+                execv("/lib/paticommands/miyav", args);
+                perror("miyav baslatilmadi");
+                exit(EXIT_FAILURE);
+            } else if (pid > 0) {
+                wait(NULL);
             } else {
-                printf("miyav: %s cevap vermiyor... kedy uzgun :(\n", argv[1]);
+                perror("fork basarisiz");
             }
-
-            close(soket);
-            freeaddrinfo(sonuc);
         }
         else if (strcmp(argv[0], "temizle") == 0) {
             for (int i = 0; i < 50; i++) {
@@ -80,25 +55,20 @@ int main(void) {
             printf("Ekran Gumletildi!\n");
         }
         else if (strcmp(argv[0], "ls") == 0) {
-            struct dirent *entry;
-            DIR *dirFile;
-            if (argv[1] == NULL) {
-                dirFile = opendir(".");
+            pid_t pid = fork();
+            if (pid == 0) {
+                char *args[] = {"/lib/paticommands/ls", argv[1], NULL};
+                execv("/lib/paticommands/ls", args);
+                perror("ls baslatilmadi");
+                exit(EXIT_FAILURE);
+            } else if (pid > 0) {
+                wait(NULL);
             } else {
-                dirFile = opendir(argv[1]);
+                perror("fork basarisiz");
             }
-            if (dirFile == NULL) {
-                perror("Dizin yok veya acilamadi");
-                continue;
-            }
-            while ((entry = readdir(dirFile)) != NULL) {
-                printf("%-20s\t", entry->d_name);
-            }
-            closedir(dirFile);
-            printf("\n");
         }
         else if (strcmp(argv[0], "yapimci") == 0) {
-            printf("Pati-1.0 by Mehmet Demir. Kod adi: Cilek (Strawberry)\n");
+            printf("Pati-2.1 by Mehmet Demir. Kod adi: Ananas (Pineapple)\n");
         }
         else if (strcmp(argv[0], "touch") == 0) {
             if (argv[1] == NULL) {
@@ -119,98 +89,36 @@ int main(void) {
             reboot(RB_POWER_OFF);
         }
         else if (strcmp(argv[0], "cat") == 0) {
-            char girdi1[256];
-            if (argv[1] == NULL) {
-                printf("Kullanim: cat <dosya>\n");
-                continue;
-            }
-            FILE *ofile = fopen(argv[1], "r");
-            if (ofile == NULL) {
-                printf("Acmaya calistigin dosya bombos? Kalbin gibi :)\n");
-                continue;
-            }
-            while (fgets(girdi1, 256, ofile) != NULL) {
-                printf("%s", girdi1);
-            }
-            fclose(ofile);
-            printf("\n");
-        }
-        else if (strcmp(argv[0], "acil-durum") == 0) {
-            printf("\n\n");
-            printf("                                                 Acil Yeniden Baslatma Protokolu\n");
-            printf("                                        Bu komut/buton'u sadece acil durumlarda\n");
-            printf("                                 kullanin, gerekmedikce kullanmaniz sistemi bozabilir.\n");
-            printf("                                                  Devam Etmek Istiyormusunuz? (E/H): ");
-            fflush(stdout);
-            char onay[10];
-            fgets(onay, 10, stdin);
-            if (onay[0] == 'E' || onay[0] == 'e') {
-                printf("Sistem yeniden baslatiliyor...\n");
-                reboot(RB_AUTOBOOT);
+            pid_t pid = fork();
+            if (pid == 0) {
+                char *args[] = {"/lib/paticommands/cat", argv[1], NULL};
+                execv("/lib/paticommands/cat", args);
+                perror("cat baslatilmadi");
+                exit(EXIT_FAILURE);
+            } else if (pid > 0) {
+                wait(NULL);
             } else {
-                printf("Acil yeniden baslatma iptal edildi.\n");
+                perror("fork basarisiz");
+            }
         }
-    }
         else if (strcmp(argv[0], "mamakabi") == 0) {
-            char girdi1[256];
-            FILE *ofile = fopen("/proc/meminfo", "r");
-            if (ofile == NULL) {
-                printf("MAMAM YOK CALDILAR D:\n");
-                continue;
+            pid_t pid = fork();
+            if (pid == 0) {
+                char *args[] = {"/lib/paticommands/mamakabi", argv[1], NULL};
+                execv("/lib/paticommands/mamakabi", args);
+                perror("mamakabi baslatilmadi");
+                exit(EXIT_FAILURE);
+            } else if (pid > 0) {
+                wait(NULL);
+            } else {
+                perror("fork basarisiz");
             }
-            while (fgets(girdi1, 256, ofile) != NULL) {
-                printf("%s", girdi1);
-            }
-            fclose(ofile);
-            printf("\n");
         }
         else if (strcmp(argv[0], "libreturks") == 0) {
-            printf("########=--:--=+=---:::::::--:-::::::::::::::::::::::::--:::::::::::--:---\n");
-            printf("########=--::-=++---------------------::::::::::::::::::::::::::::::----:::\n");
-            printf("########+--::--+=-----------------------::-::::::::::::::::::::::::::::::::\n");
-            printf("########+-::::-==-----=-=====-------==---=--------:::::::::::::::::::::::::\n");
-            printf("########+-::::-==-------====--========++++++==+====---------:::::::::::::::\n");
-            printf("########*-::::-=--------=----:-=######%%%%#*+========+++++++++===--::::::::::::::\n");
-            printf("########*-:::--------==--:::::---=+=====--=====++=++**##*++==---:::::::::::\n");
-            printf("########*-:::-----==++*+++++++++++++======+++++++**++===+**+++*+++=-:::::::\n");
-            printf("########*=:----=++*++=++****++++++++++++++++++++++++**##**++++++++++++--:::\n");
-            printf("########*=-===++++++=+++*********+++++++++**************+++===+=++++++++--:\n");
-            printf("########+==+*++*+++++*************+***+*++++++******#***+**+++++++++++**=-:\n");
-            printf("########*+*************#*********+******+++******########***+==+++++**+*=--\n");
-            printf("#########+==---***#####********************#****##########***+++*****+++---\n");
-            printf("#########+-:::-=*####*#*#***#***#**********##*+****########******#**+++=---\n");
-            printf("******++++++++++*####***#*+*#*++**+++=*++++##*+**###*****####*******+=+----\n");
-            printf("*********++++++*******+***++#*++++===-=+=++**++**********######**##*+=+++++\n");
-            printf("#*******+++++=+++****++***++*+++=---::--==+**+++*****++*************+++++++\n");
-            printf("%%%%%%####+=++**###%%%%#%%%%@@%%%%*+=--:::::---==+###%%%%#*#***#*******+++++=+++++\n");
-            printf("@@@@@@@@%%%%#=++*******#*@@@@@#+----:::::---=#*@%%#%%#*##%%%%#*****+*+++==***#*\n");
-            printf("@@@@@@@@@@%%+=++*****+++##@@%%@#+---::::::::-+#+%%@@@@#******#***++++++==*####\n");
-            printf("@@@@@@@@@@%%+=+********+++##*+*+:::::::::::=+*#+#%%%%##++*********+++++==*####\n");
-            printf("@@@@@@@@@@%%+=+*********++=-::::::::::::::::--:-++++**###*********++++=*%%%%%%\n");
-            printf("@@@@@@@@@@%%+++********+=-:::::::::::::::::::::::-=++**************++==+%%%%%%\n");
-            printf("@@@@@@@@@@%%#++*+++++*+=-:::::::::::::::::::::::::-==++******++*****+==*%%%%%%\n");
-            printf("@@@@@@@@@@##++++++++++=---:::::=*+++*+=-:::::::::::-=++++++++++++*++==*%%%%%%\n");
-            printf("@@@@@@%%%%@%%%%@@%%%%*+++++++==-------:---=++=--::::::::::::--==+****++==++*++=+%%%%%%\n");
-            printf("@@@@@@@@@@@@%%==++======-----------=+----::::::::::::---=++++++++++++==+%%%%%%\n");
-            printf("@@@@@@@@@@%%#*+====---=----------===+=---:::::-:::::------=====++++++==#%%%%%%\n");
-            printf("%%%%@%%%%%%%%@%%#*+++==----====-=========+++==--------::::----------==++++==*#@@@@\n");
-            printf("@@@@%%%%#****++=-----==-===================---------------------======*%%%%@@@\n");
-            printf("@@@@%%**+**+==--------========================--------------------=+*%%%%%%%\n");
-            printf("@%%@#*++++++=----------=======================--------------------+#%%%%@@@@@\n");
-            printf("@%%#***+++==-------------=====================----------------:::-+#@@@%%%%@@@\n");
-            printf("%%%%#****+*==----------------============----====--------------::::-**##%%@@@%%%%@\n");
-            printf("****+**+=-------------------------------------------------::::::-+#%%%%#*%%%%@@\n");
-            printf("*******+=-----------------------------------------------:::::::::+%%%%@%%#%%%%#\n");
-            printf("*******+=---------------------------------------------::::::::::-*%%%%@@%%%%%@\n");
-            printf("*******+---------------------------------------------:::::::::::-#%%@@%%@@@@@\n");
-            printf("*#####+=-------------------------------------------:::::::::::::=#%%@@@@@@@@\n");
-            printf("*####*+=--------------------------------------:::::::::::::::::::+#%%@@@@@@@\n");
-            printf("####**++==-------:------:-------------------:::::::::::::::::::::+#%%@@@@@@@\n");
-            fflush(stdout);
             printf("\nYaHnI oLaN vArMi?\n");
         }
         else if (strcmp(argv[0], "psc") == 0) {
-            char *psc_args[3] = {"/pcg-startup/psc", NULL, NULL};
+             char *psc_args[3] = {"/pcg-startup/psc", NULL, NULL};
             if (argv[1] != NULL) {
                 psc_args[1] = argv[1];
                 psc_args[2] = NULL;
@@ -231,8 +139,8 @@ int main(void) {
             if (two_pid == 0) {
                 setenv("TERMINFO", "/usr/lib/terminfo", 1);
                 setenv("TERM", "xterm", 1);
-                char *args[] = {"/bin/2048", NULL};
-                execv("/bin/2048", args);
+                char *args[] = {"/lib/paticommands/2048", NULL};
+                execv("/lib/paticommands/2048", args);
             } else if (two_pid > 0) {
                 wait(NULL);
                 system("reset");
@@ -243,8 +151,8 @@ int main(void) {
         else if (strcmp(argv[0], "grafik") == 0) {
             pid_t tri_pid = fork();
             if (tri_pid == 0) {
-                char *args[] = {"/bin/grafik", NULL};
-                execv("/bin/grafik", args);
+                char *args[] = {"/lib/paticommands/grafik", NULL};
+                execv("/lib/paticommands/grafik", args);
                 perror("execv hatasi");
                 exit(1);
             } else if (tri_pid < 0) {
@@ -252,75 +160,17 @@ int main(void) {
             }
         }
         else if (strcmp(argv[0], "karabas") == 0) {
-            struct dirent **namelist;
-            int n = scandir("/dev/pcgconfigs", &namelist, NULL, alphasort);
-            if (n < 0) {
-                printf("pcgconfigs acilamadi!\n");
-                continue;
+            pid_t pid = fork();
+            if (pid == 0) {
+                char *args[] = {"/lib/paticommands/karabas", NULL};
+                execv("/lib/paticommands/karabas", args);
+                perror("karabas baslatilmadi");
+                exit(EXIT_FAILURE);
+            } else if (pid > 0) {
+                wait(NULL);
+            } else {
+                perror("fork basarisiz");
             }
-
-            printf("%-20s %s\n", "Programlar", "PID");
-            printf("----------------------------------\n");
-
-            for (int i = 0; i < n; i++) {
-                if (strcmp(namelist[i]->d_name, ".") == 0) { free(namelist[i]); continue; }
-                if (strcmp(namelist[i]->d_name, "..") == 0) { free(namelist[i]); continue; }
-                if (strstr(namelist[i]->d_name, ".pcg") == NULL) { free(namelist[i]); continue; }
-
-                char tamyol[512];
-                char dosya[256];
-                snprintf(tamyol, sizeof(tamyol), "/dev/pcgconfigs/%s", namelist[i]->d_name);
-                FILE *pcgfile = fopen(tamyol, "r");
-                if (pcgfile == NULL) { free(namelist[i]); continue; }
-
-                char dosyayolu[256] = {0};
-                while (fgets(dosya, sizeof(dosya), pcgfile) != NULL) {
-                    char kopya[256];
-                    strcpy(kopya, dosya);
-                    char *okuyucu = strtok(kopya, " =\n");
-                    if (okuyucu == NULL) continue;
-                    if (strcmp(okuyucu, "konumu") == 0) {
-                        char *gecici = strtok(NULL, " =\n");
-                        if (gecici != NULL) strcpy(dosyayolu, gecici);
-                    }
-                }
-                fclose(pcgfile);
-
-                if (strlen(dosyayolu) == 0) { free(namelist[i]); continue; }
-
-                struct dirent **proclist;
-                int np = scandir("/proc", &proclist, NULL, alphasort);
-                if (np < 0) { free(namelist[i]); continue; }
-
-                int bulundu = 0;
-                for (int j = 0; j < np; j++) {
-                    if (atoi(proclist[j]->d_name) > 0) {
-                        snprintf(tamyol, sizeof(tamyol), "/proc/%s/cmdline", proclist[j]->d_name);
-                        FILE *cmdfile = fopen(tamyol, "r");
-                        if (cmdfile != NULL) {
-                            char cmdline[256] = {0};
-                            fread(cmdline, 1, sizeof(cmdline) - 1, cmdfile);
-                            fclose(cmdfile);
-                            if (strcmp(cmdline, dosyayolu) == 0) {
-                                char adkopya[256];
-                                strcpy(adkopya, dosyayolu);
-                                printf("%-20s PID: %s\n", basename(adkopya), proclist[j]->d_name);
-                                bulundu = 1;
-                            }
-                        }
-                    }
-                    free(proclist[j]);
-                }
-                free(proclist);
-
-                if (bulundu == 0) {
-                    char adkopya[256];
-                    strcpy(adkopya, dosyayolu);
-                    printf("%-20s [calismiyor]\n", basename(adkopya));
-                }
-                free(namelist[i]);
-            }
-            free(namelist);
         }
         else if (strcmp(argv[0], "yardim") == 0) {
             printf("\nKomutlar:\n");
@@ -337,19 +187,31 @@ int main(void) {
             printf("  libreturks  = ahem...\n");
             printf("  touch = dosya olusturur\n");
             printf("  patifetch = sistem bilgisi\n");
+            printf("  vi       = Editor\n");
             printf("  cikis    = Sistemi kapat\n\n");
         }
         else if (strcmp(argv[0], "patifetch") == 0) {
             pid_t fetch_pid = fork();
             if (fetch_pid == 0) {
-                char *args[] = {"/bin/patifetch", NULL};
-                execv("/bin/patifetch", args);
+                char *args[] = {"/lib/paticommands/patifetch", NULL};
+                execv("/lib/paticommands/patifetch", args);
                 perror("pati-fetch baslatilmadi");
                 exit(EXIT_FAILURE);
             } else if (fetch_pid > 0) {
                 wait(NULL);
             } else {
                 perror("fork basarisiz");
+            }
+        }
+        else if (strcmp(argv[0], "vi") == 0) {
+            pid_t pid = fork();
+            if (pid == 0) {
+                char *args[] = {"/lib/paticommands/vi", argv[1], NULL};
+                execv("/lib/paticommands/vi", args);
+                perror("vi calismadi");
+                exit(EXIT_FAILURE);
+            } else if (pid > 0) {
+                wait(NULL);
             }
         }
         else {
