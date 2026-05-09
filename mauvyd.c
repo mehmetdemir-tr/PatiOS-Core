@@ -11,14 +11,12 @@
 #include <arpa/inet.h>
 #include <linux/route.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <errno.h>
 #include "pati-headers/pcg.h"
 
 int main() {
     struct dirent *entry;
     pid_t pid;
-    int status;
     struct dirent **namelist;
     int n = scandir("/dev/pcgconfigs", &namelist, NULL, alphasort);
     if (n < 0) {
@@ -40,8 +38,9 @@ int main() {
     } else {
         perror("[HATA]: Baglanamadi");
     }
-    printf("ip yolu: ");
-    system("which ip");
+    putenv("PATH=/lib/paticommands/:/bin:/pcg-startup:/usr/bin");
+    printf("\nYaHnI oLaN vArMi?\n");
+    printf("Pati-2.1 by Mehmet Demir. Kod adi: Ananas (Pineapple)\n");
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     struct ifreq ifr;
     memset(&ifr, 0, sizeof(ifr));
@@ -130,8 +129,4 @@ free(namelist[i]);
 }
 free(namelist);
 while(wait(NULL) > 0);
-// Invoking the programs
-// Example: hello.ppg
-// system("")
-//.. böyle devam ediyor
 }
