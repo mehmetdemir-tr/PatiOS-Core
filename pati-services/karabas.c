@@ -24,17 +24,17 @@ int main() {
             if (strcmp(entry->d_name, "..") == 0) continue;
             if (strstr(entry->d_name, ".pcg") == NULL) continue;
 
-            char tamyol[512];
+            char full_path[512];
             char dosya[256];
-            snprintf(tamyol, sizeof(tamyol), "/dev/pcgconfigs/%s", entry->d_name);
-            FILE *pcgfile = fopen(tamyol, "r");
+            snprintf(full_path, sizeof(full_path), "/dev/pcgconfigs/%s", entry->d_name);
+            FILE *pcgfile = fopen(full_path, "r");
             if (pcgfile == NULL) {
                 printf("Dosya acilamadi, atlaniyor: %s\n", entry->d_name);
                 free(namelist[i]);
                 continue;
             }
 
-            char dosyayolu[256] = {0};
+            char file_path[256] = {0};
             char *args[] = {NULL, NULL};
             int izle = 0;
             int bulundu = 0;
@@ -46,10 +46,10 @@ int main() {
                 if (okuyucu == NULL) continue;
 
                 if (strcmp(okuyucu, "konumu") == 0) {
-                    char *gecici = strtok(NULL, " =\n");
-                    if (gecici != NULL) {
-                        strncpy(dosyayolu, gecici);
-                        args[0] = dosyayolu;
+                    char *temp = strtok(NULL, " =\n");
+                    if (temp != NULL) {
+                        strncpy(file_path, temp);
+                        args[0] = file_path;
                     }
                 }
                 if (strcmp(okuyucu, "izle") == 0) {
@@ -58,7 +58,7 @@ int main() {
             }
             fclose(pcgfile);
 
-            if (izle == 1 && strlen(dosyayolu) > 0) {
+            if (izle == 1 && strlen(file_path) > 0) {
                 struct dirent **proclist;
                 int np = scandir("/proc", &proclist, NULL, alphasort);
                 if (np < 0) {
@@ -68,13 +68,13 @@ int main() {
 
                 for (int j = 0; j < np; j++) {
                     if (atoi(proclist[j]->d_name) > 0) {
-                        snprintf(tamyol, sizeof(tamyol), "/proc/%s/cmdline", proclist[j]->d_name);
-                        FILE *cmdfile = fopen(tamyol, "r");
+                        snprintf(full_path, sizeof(full_path), "/proc/%s/cmdline", proclist[j]->d_name);
+                        FILE *cmdfile = fopen(full_path, "r");
                         if (cmdfile != NULL) {
                             char cmdline[256] = {0};
                             fread(cmdline, 1, sizeof(cmdline) - 1, cmdfile);
                             fclose(cmdfile);
-                            if (strcmp(cmdline, dosyayolu) == 0) {
+                            if (strcmp(cmdline, file_path) == 0) {
                                 bulundu = 1;
                             }
                         }
@@ -84,10 +84,10 @@ int main() {
                 free(proclist);
 
                 if (bulundu == 0) {
-                    printf("Oldu process yeniden baslatiliyor: %s\n", dosyayolu);
+                    printf("Oldu process yeniden baslatiliyor: %s\n", file_path);
                     pid_t pid = fork();
                     if (pid == 0) {
-                        execv(dosyayolu, args);
+                        execv(file_path, args);
                         perror("execv basarisiz");
                         exit(1);
                     }

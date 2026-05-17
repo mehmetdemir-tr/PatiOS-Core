@@ -8,8 +8,8 @@ int main() {
     FILE *fp;
     FILE *fpointer;
     char mac[20];
-    char alfabe[] = "abcdefghijklmnopqrstuvwxyz0123456789";
-    char kelime[5];
+    char alphabet[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    char word[5];
     unsigned char rastgele[4];
 
     fpointer = fopen("/dev/urandom", "rb");
@@ -21,10 +21,10 @@ int main() {
     fclose(fpointer);
 
     for (int i = 0; i < 4; i++) {
-        kelime[i] = alfabe[rastgele[i] % 36];
+        word[i] = alphabet[rastgele[i] % 36];
     }
-    kelime[4] = '\0';
-    // printf("Rastgele kelime: %s\n", kelime);
+    word[4] = '\0';
+    // printf("Rastgele word: %s\n", word);
 
     fp = fopen("/sys/class/net/eth0/address", "r");
     if (fp == NULL) {
@@ -49,7 +49,7 @@ while (sol < sag) {
     sag--;
 }
 char umci[50];
-snprintf(umci, sizeof(umci), "UI-%s-%s-Pati2.1-Pineapple", kelime, mac_kisim);
+snprintf(umci, sizeof(umci), "UI-%s-%s-Pati2.1-Pineapple", word, mac_kisim);
 // printf("%s\n", umci);
 
 if (access("/etc/device.umci", F_OK) == 0) {

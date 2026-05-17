@@ -1,5 +1,3 @@
-
-
 # Pati Mobile OS
 
 **Pati**, Linux Çekirdeği (Kernel) tabanlı olarak geliştirilen deneysel bir mobil işletim sistemi projesidir.

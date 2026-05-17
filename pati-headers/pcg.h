@@ -5,6 +5,6 @@
 #include <string.h>
 #include <stddef.h>
 
-int pcg_read(const char *dosya_yolu, const char *key, char *buf, size_t buf_sz);
+int pcg_read(const char *file_path, const char *key, char *buf, size_t buf_size);
 
 #endif
