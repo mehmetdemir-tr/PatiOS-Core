@@ -5,8 +5,8 @@
 #include <sys/wait.h>
 
 int main(void) {
-    putenv("PATH=/lib/paticommands/:/bin:/pcg-startup:/usr/bin");
     while (1) {
+        setbuf(stdin, NULL);
         printf("pati@tr-2.1> ");
         fflush(stdout);
         char girdi[256];
@@ -27,7 +27,7 @@ int main(void) {
             pid_t pid = fork();
             if (pid == 0) {
                 execvp(argv[0], argv);
-                printf("%s komutu bulunamadi, bi' yardim komutuna bak istersen..\n", argv[0]);
+                printf("%s komutu bulunamadı. Bence yardım komutuna bak.\n", argv[0]);
                 exit(127);
             } else if (pid > 0) {
                 wait(NULL);
