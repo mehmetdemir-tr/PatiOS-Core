@@ -1,9 +1,9 @@
 
 # NOTE: If you want to make your own Pati Based OS, use this repository: [KedyBox](https://github.com/mehmetdemir-tr/KedyBox)
-
+## This version is Legacy and still open to contribute.
 # Pati Mobile OS
 
-**Pati**, Linux Çekirdeği (Kernel) tabanlı olarak geliştirilen deneysel bir mobil işletim sistemi projesidir.
+**PatiOS**, Linux Çekirdeği (Kernel) tabanlı olarak geliştirilen deneysel bir mobil işletim sistemi projesidir.
 **Kod Adı:** `pineapple-ananas`
 
 ## Öne Çıkan Özellikler
