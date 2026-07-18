@@ -30,7 +30,7 @@ PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamam
 
 ---
 
-## 🚀 Dağıtım Kurulumu ve Hedef Platformlar
+## Dağıtım Kurulumu ve Hedef Platformlar
 
 ### Desteklenen Donanımlar
 * Raspberry Pi 3 / 4 / 5 (ARM64)
