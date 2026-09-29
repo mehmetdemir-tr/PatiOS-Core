@@ -3,7 +3,7 @@
 [![Language: C](https://img.shields.io/badge/Language-C-A8B9CC.svg)](https://ibm.com)
 [![AI Assisted](https://img.shields.io/badge/AI_Assisted-orange)](#)
 
-**PatiOS-Core**, sistemin tamamı %100 C ile yazılmış ve Linux Kerneli ile çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
+**PatiOS-Core**, sistemin temel bileşenleri (sistem yöneticisi vb. %100 C ile yazılmış ve Linux Kerneli ile çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
 
 * **Geliştirme Motoru:** Kendi özel dağıtımınızı derlemek ve genişletmek için çevreleyici ekosistem aracı olan **[KedyBox](https://github.com/mehmetdemir-tr/KedyBox)** reposunu kullanabilirsiniz.
 * **Kod Adı:** `watermelon-karpuz`
@@ -36,7 +36,7 @@ PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamam
 
 ### Kurulum aşamaları (Raspberry Pi 3/4/5) 
 1. SD kartınızı **MBR** düzeniyle bölümlendirin ve minimum **512MB FAT32** alanı oluşturun.
-2. [Raspberry Pi Firmware](https://github.com) reposundan `boot` klasör içeriğini bu bölüme taşıyın.
+2. [Raspberry Pi Firmware](https://github.com/raspberrypi/firmware) reposundan `boot` klasör içeriğini bu bölüme taşıyın.
 3. KedyBox ile derlediğiniz `initramfs` dosyasının adını `initramfs.gz` yaparak FAT32 bölümüne yükleyin.
 4. `cmdline.txt` dosyasını oluşturup şu parametreleri ekleyin:  
    `console=serial0,115200 console=tty1 rdinit=/init`
