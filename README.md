@@ -15,7 +15,7 @@
 PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamamen kendi rootfs ve user-space araçlarını kullanır:
 
 * **Sıfır Bağımlılık (Standalone User-Space):** Sistem, harici ağır paket yığınlarına veya yorumlayıcılara (Python vb.) ihtiyaç duymadan doğrudan saf C ikilileri (binary) ile çalışır.
-* **Musl-libc Optimizasyonu:** `aarch64-linux-musl-gcc` zinciri hedeflenerek derlenmiştir. Bu sayede standart `glibc` kütüphanelerine kıyasla bellek taşması (buffer overflow) gibi siber güvenlik zafiyetlerine karşı doğal koruma ve ultra hafif binary boyutu sağlar.
+* **Musl-libc Optimizasyonu:** `aarch64-linux-musl-gcc` zinciri hedeflenerek derlenmiştir. Bu sayede standart `glibc` kütüphanelerine kıyasla daha hafif binary boyutu sağlar.
 
 ---
 
