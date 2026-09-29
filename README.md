@@ -3,9 +3,9 @@
 [![Language: C](https://img.shields.io/badge/Language-C-A8B9CC.svg)](https://ibm.com)
 [![AI Assisted](https://img.shields.io/badge/AI_Assisted-orange)](#)
 
-**PatiOS-Core**, sistemin temel bileşenleri (sistem yöneticisi vb. %100 C ile yazılmış ve Linux Kerneli ile çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
+**PatiOS-Core**, sistem yöneticisi, kabuk ve servis araçları gibi temel sistem bileşenleri %100 C ile yazılmış, Linux kernel'i üzerinde çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
 
-* **Geliştirme Motoru:** Kendi özel dağıtımınızı derlemek ve genişletmek için çevreleyici ekosistem aracı olan **[KedyBox](https://github.com/mehmetdemir-tr/KedyBox)** reposunu kullanabilirsiniz.
+* **Geliştirme Motoru:** Kendi özel Linux dağıtımınızı derlemek ve genişletmek için yardımcı ekosistem aracı olan **[KedyBox](https://github.com/mehmetdemir-tr/KedyBox)** reposunu kullanabilirsiniz.
 * **Kod Adı:** `watermelon-karpuz`
 
 ---
@@ -14,7 +14,7 @@
 
 PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamamen kendi rootfs ve user-space araçlarını kullanır:
 
-* **Standalone User-Space:** Sistem, harici ağır paket yığınlarına veya yorumlayıcılara (Python vb.) ihtiyaç duymadan doğrudan saf C ikilileri (binary) ile çalışır.
+* **Standalone User-Space:** Sistem; Python gibi ağır yorumlayıcılara ihtiyaç duymadan, C ile derlenmiş minimal user-space ikili dosyalarıyla çalışır.
 * **Musl-libc Optimizasyonu:** `aarch64-linux-musl-gcc` zinciri hedeflenerek derlenmiştir. Bu sayede standart `glibc` kütüphanelerine kıyasla daha hafif binary boyutu sağlar.
 
 ---
