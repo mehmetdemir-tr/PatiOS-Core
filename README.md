@@ -3,7 +3,7 @@
 [![Language: C](https://img.shields.io/badge/Language-C-A8B9CC.svg)](https://ibm.com)
 [![AI Assisted](https://img.shields.io/badge/AI_Assisted-orange)](#)
 
-**PatiOS-Core**, %100 C ile yazılmış Linux Kerneli ile çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
+**PatiOS-Core**, %100 C ile yazılmış ve Linux Kerneli ile çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
 
 * **Geliştirme Motoru:** Kendi özel dağıtımınızı derlemek ve genişletmek için çevreleyici ekosistem aracı olan **[KedyBox](https://github.com/mehmetdemir-tr/KedyBox)** reposunu kullanabilirsiniz.
 * **Kod Adı:** `watermelon-karpuz`
