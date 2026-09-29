@@ -21,7 +21,7 @@ PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamam
 
 ## Proje İçeriği ve Dosya Yapısı
 
-* `shell.c` : İşletim sistemi ana kabuğu.
+* `shell.c` : İşletim sisteminin ana kabuğu.
 * `mauvyd.c` : Çekirdek başlangıcından sonra devreye giren temel sistem yönetim dosyası. (systemd tarzı)
 * `pati-services/` : `karabaş` gibi PatiOS-Core'a has olan servisler ve programlar.
 
@@ -29,18 +29,18 @@ PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamam
 
 ## Dağıtım Kurulumu ve Hedef Platformlar
 
-### Desteklenen Donanımlar
+### Desteklenen / Hedeflenen platformlar
 * Raspberry Pi 3 / 4 / 5 (ARM64)
 * QEMU (Sanallaştırma ortamları)
 * WSL (Windows Subsystem for Linux) ve Yerel Linux Dağıtımları
 
-### Canlı Kurulum Protokolü (Raspberry Pi 3/4/5)
+### Kurulum aşamaları (Raspberry Pi 3/4/5) 
 1. SD kartınızı **MBR** düzeniyle bölümlendirin ve minimum **512MB FAT32** alanı oluşturun.
 2. [Raspberry Pi Firmware](https://github.com) reposundan `boot` klasör içeriğini bu bölüme taşıyın.
 3. KedyBox ile derlediğiniz `initramfs` dosyasının adını `initramfs.gz` yaparak FAT32 bölümüne yükleyin.
 4. `cmdline.txt` dosyasını oluşturup şu parametreleri ekleyin:  
    `console=serial0,115200 console=tty1 rdinit=/init`
-5. `config.txt` dosyasını oluşturup sistemi şu optimize parametrelerle yapılandırın:
+5. `config.txt` dosyasını oluşturup sistemi şu örnek parametrelerle kaydedebilirsiniz:
    ```text
    display_auto_detect=1
    initramfs initramfs.gz followkernel
@@ -71,6 +71,14 @@ Bu proje **MIT** lisansı ile yayınlanmaktadır.
 * Projeye katkı sağlamak veya hata bildirmek için **Issues** sekmesinden istek açabilirsiniz.
 
 **Geliştirme Notu:** Bu proje, araştırma ve derin mühendislik odaklı bir protokolle geliştirilmektedir. Yapay zeka yardımı alınırken doğrudan kod kopyalamak yerine, işletim sistemi teorisi, terim araştırması ve alt seviye mantık sorgulama yöntemi tercih edilmektedir.
+
+
+## Timeline (Projenin zaman akışı):
+1. 27 Mart 2026 - Repo oluşturuldu (Pati adıyla)
+2. 11 Nisan 2026 - İlk resmi sürüm
+3. 9 Mayıs 2026 - 2.1 sürümüne ve Ananas kodadına geçiş
+4. 19 Mayıs 2026 - Özel 19 Mayıs Atatürk'ü anma gençlik ve spor bayramı sürümü yayınlandı
+5. 2 Temmuz 2026 - Projenin son sürümü yayınlandı (2.6)
 
 ---
 *Geliştirici: [mehmetdemir-tr](https://github.com/mehmetdemir-tr)*
