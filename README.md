@@ -1,9 +1,9 @@
 # PatiOS-Core
-## Durum: Archived
+## Durum: Arşivlenmiş
 [![Language: C](https://img.shields.io/badge/Language-C-A8B9CC.svg)](https://ibm.com)
 [![AI Assisted](https://img.shields.io/badge/AI_Assisted-orange)](#)
 
-**PatiOS-Core**, gömülü sistemler, siber güvenlik altyapıları ve bağımsız mobil platformlar için Linux Çekirdeği (Kernel) mimarisi üzerine **sıfırdan (from scratch)** inşa edilmiş, %100 saf C tabanlı bağımsız bir Linux dağıtım çatısıdır. 
+**PatiOS-Core**, %100 C ile yazılmış Linux Kerneli ile çalışan bir Linux From Scratch (LFS) dağıtım çatısıdır.
 
 * **Geliştirme Motoru:** Kendi özel dağıtımınızı derlemek ve genişletmek için çevreleyici ekosistem aracı olan **[KedyBox](https://github.com/mehmetdemir-tr/KedyBox)** reposunu kullanabilirsiniz.
 * **Kod Adı:** `watermelon-karpuz`
@@ -12,21 +12,18 @@
 
 ## Teknik Mimari ve Öne Çıkan Özellikler
 
-PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamamen ham çekirdek üzerine inşa edilen kök dosya sistemi (rootfs) ve kullanıcı alanı (user-space) araçlarından oluşur:
+PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamamen kendi rootfs ve user-space araçlarını kullanır:
 
 * **Sıfır Bağımlılık (Standalone User-Space):** Sistem, harici ağır paket yığınlarına veya yorumlayıcılara (Python vb.) ihtiyaç duymadan doğrudan saf C ikilileri (binary) ile çalışır.
-* **Karabaş Servisi (`pati-services`):** Arka planda kritik sistem süreçlerini, bellek sızıntılarını ve proses durumlarını mikroskobik düzeyde izleyen, tamamen C ile yazılmış proses takip komutudur.
-* **Gelişmiş İzole Kabuk (`shell.c`):** Üçüncü parti kabuk bileşenlerine bağımlı kalmadan, sistemin en alt katmanıyla doğrudan donanım seviyesinde haberleşen, hafif ve güvenli komut satırı arayüzüdür.
 * **Musl-libc Optimizasyonu:** `aarch64-linux-musl-gcc` zinciri hedeflenerek derlenmiştir. Bu sayede standart `glibc` kütüphanelerine kıyasla bellek taşması (buffer overflow) gibi siber güvenlik zafiyetlerine karşı doğal koruma ve ultra hafif binary boyutu sağlar.
 
 ---
 
 ## Proje İçeriği ve Dosya Yapısı
 
-* `shell.c` : İşletim sistemi ana kabuğu, kullanıcı etkileşimi ve alt komut yönetim mimarisi.
-* `mauvyd.c` : Çekirdek başlangıcından sonra devreye giren temel sistem yönetim dosyası.
-* `pati-services/` : `karabaş` gibi kritik arka plan servislerinin ve sistem daemonlarının kaynak kodları.
-* `Kernel Yapılandırması` : ARM64 ve Raspberry Pi mimarileri için optimize edilmiş minimal, sertleştirilmiş çekirdek dosyaları.
+* `shell.c` : İşletim sistemi ana kabuğu.
+* `mauvyd.c` : Çekirdek başlangıcından sonra devreye giren temel sistem yönetim dosyası. (systemd tarzı)
+* `pati-services/` : `karabaş` gibi PatiOS-Core'a has olan servisler ve programlar.
 
 ---
 
@@ -57,13 +54,13 @@ PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamam
 ## Sistem Ekran Görüntüleri
 
 ![Shell](https://raw.githubusercontent.com/mehmetdemir-tr/Pati/main/screenshots/genel.jpeg)  
-*Shell — İşletim sisteminin bağımsız, saf C ile yazılmış ana kabuk arayüzü.*
+*Shell.*
 
 ![Yardım](https://raw.githubusercontent.com/mehmetdemir-tr/Pati/main/screenshots/yardim.jpeg)  
-*`yardım` komutu — Donanıma doğrudan erişen tüm yerleşik sistem komutları.*
+*`yardım` komutu.*
 
 ![Patifetch](https://raw.githubusercontent.com/mehmetdemir-tr/Pati/main/screenshots/patifetch.jpeg)  
-*`patifetch` — Çekirdek seviyesinden dinamik veri çeken sistem bilgi aracı.*
+*`patifetch` komutu.*
 
 ---
 
@@ -71,7 +68,7 @@ PatiOS-Core, Debian/Ubuntu gibi hazır dağıtım tabanlarını kullanmaz. Tamam
 
 Bu proje **MIT** lisansı ile yayınlanmaktadır. 
 * Projenin tüm telif hakları açık kalmak kaydıyla, ticari ve kurumsal projelerde kapatılarak veya entegre edilerek kullanılması tamamen serbesttir.
-* Projeye katkı sağlamak, hata bildirmek veya siber güvenlik yaması eklemek için lütfen **Issues** sekmesi üzerinden yeni bir konu açın.
+* Projeye katkı sağlamak veya hata bildirmek için **Issues** sekmesinden istek açabilirsiniz.
 
 **Geliştirme Notu:** Bu proje, araştırma ve derin mühendislik odaklı bir protokolle geliştirilmektedir. Yapay zeka yardımı alınırken doğrudan kod kopyalamak yerine, işletim sistemi teorisi, terim araştırması ve alt seviye mantık sorgulama yöntemi tercih edilmektedir.
 
